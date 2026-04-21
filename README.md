@@ -1,4 +1,4 @@
-# Flip A Penny
+# FlipDrop
 
 ![React](https://img.shields.io/badge/React-18-61dafb?style=flat-square&logo=react) ![License](https://img.shields.io/badge/license-MIT-green?style=flat-square) ![Stars](https://img.shields.io/github/stars/yourusername/flipdrop?style=flat-square) ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen?style=flat-square)
 
