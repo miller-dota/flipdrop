@@ -12,9 +12,11 @@ Built with pure CSS 3D transforms — no animation libraries, no bloat. One file
 >
 > Both coin faces (heads and tails) are base64-encoded directly inside `FlipDrop.jsx`. No external assets, no broken image paths, no CDN dependencies. The file works anywhere React works.
 
-
-<img src="flipdrop demo.png" alt="isolated" width="800"/>
 ---
+
+<div style="text-align: center;">
+  <img src="flipdrop demo.png" alt="isolated" width="600"/>
+</div>
 
 ## Features
 
