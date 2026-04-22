@@ -26,7 +26,7 @@ const styles = `
 
   .header {
     text-align: center;
-    margin-bottom: 54px;
+    margin-bottom: 48px;
   }
 
   .brand {
@@ -51,7 +51,7 @@ const styles = `
     width: 220px;
     height: 220px;
     perspective: 900px;
-    margin-bottom: 52px;
+    margin-bottom: 48px;
   }
 
   .coin-wrap {
@@ -66,12 +66,12 @@ const styles = `
   }
 
   @keyframes toss {
-    0%   { transform: rotateY(0deg) translateY(0px); }
-    20%  { transform: rotateY(360deg) translateY(-60px); }
-    50%  { transform: rotateY(900deg) translateY(-80px); }
-    75%  { transform: rotateY(1440deg) translateY(-30px); }
-    92%  { transform: rotateY(var(--end)) translateY(3px); }
-    100% { transform: rotateY(var(--end)) translateY(0px); }
+    0%   { transform: rotateY(var(--s)) translateY(0px); }
+    20%  { transform: rotateY(calc(var(--s) + 360deg)) translateY(-55px); }
+    50%  { transform: rotateY(calc(var(--s) + 900deg)) translateY(-80px); }
+    75%  { transform: rotateY(calc(var(--s) + 1440deg)) translateY(-28px); }
+    92%  { transform: rotateY(var(--e)) translateY(3px); }
+    100% { transform: rotateY(var(--e)) translateY(0px); }
   }
 
   .face {
@@ -79,6 +79,7 @@ const styles = `
     inset: 0;
     border-radius: 50%;
     backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
     overflow: hidden;
   }
 
@@ -94,8 +95,8 @@ const styles = `
 
   .result-area {
     text-align: center;
-    margin-bottom: 44px;
-    height: 52px;
+    margin-bottom: 28px;
+    height: 44px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -103,7 +104,7 @@ const styles = `
   }
 
   .result-word {
-    font-size: 26px;
+    font-size: 22px;
     font-weight: 500;
     letter-spacing: -0.02em;
     color: #111;
@@ -120,79 +121,132 @@ const styles = `
     letter-spacing: 0.2em;
     text-transform: uppercase;
     color: #bbb;
-    margin-top: 6px;
+    margin-top: 4px;
     opacity: 0;
     transition: opacity 0.4s ease 0.15s;
   }
 
   .result-meta.show { opacity: 1; }
 
-  .btn {
-    font-family: inherit;
-    font-size: 10.5px;
-    font-weight: 400;
-    letter-spacing: 0.25em;
+  .flip-btn {
+    font-family: 'DM Mono', monospace;
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: 0.28em;
     text-transform: uppercase;
-    color: #111;
-    background: #fff;
-    border: 1px solid #111;
-    padding: 13px 44px;
+    color: #fff;
+    background: #111;
+    border: none;
+    border-radius: 999px;
+    padding: 18px 72px;
     cursor: pointer;
-    transition: background 0.18s, color 0.18s;
-    margin-bottom: 52px;
+    transition: background 0.18s, transform 0.12s;
+    margin-bottom: 24px;
+    display: block;
   }
 
-  .btn:hover:not(:disabled) { background: #111; color: #fff; }
-  .btn:disabled { opacity: 0.35; cursor: not-allowed; }
+  .flip-btn:hover:not(:disabled) { background: #333; }
+  .flip-btn:active:not(:disabled) { transform: scale(0.97); }
+  .flip-btn:disabled { background: #999; cursor: not-allowed; }
 
-  .tally {
+  /* ── TALLY CARD — compact ── */
+  .tally-card {
+    width: 100%;
+    max-width: 300px;
+    border: 1.5px solid #e8e8e8;
+    border-radius: 16px;
     display: flex;
-    align-items: center;
-    gap: 32px;
+    align-items: stretch;
+    margin-bottom: 18px;
+    overflow: hidden;
   }
 
-  .t-item { text-align: center; }
+  .t-col {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 16px 10px;
+  }
+
+  .t-divider {
+    width: 1px;
+    background: #e8e8e8;
+    margin: 14px 0;
+  }
 
   .t-num {
-    font-size: 22px;
+    font-size: 24px;
     font-weight: 500;
     color: #111;
     line-height: 1;
+    margin-bottom: 7px;
+    letter-spacing: -0.02em;
   }
 
+  .t-num.total { font-weight: 700; }
+
   .t-lbl {
-    font-size: 9.5px;
-    font-weight: 300;
+    font-size: 9px;
+    font-weight: 400;
     letter-spacing: 0.2em;
     text-transform: uppercase;
     color: #bbb;
-    margin-top: 5px;
   }
 
-  .t-sep {
-    width: 1px;
-    height: 28px;
-    background: #e5e5e5;
+  .reset-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ccc;
+    transition: color 0.18s, transform 0.3s;
+    border-radius: 50%;
+  }
+
+  .reset-btn:hover { color: #999; }
+  .reset-btn:active { transform: rotate(180deg); color: #555; }
+
+  .reset-btn svg {
+    width: 22px;
+    height: 22px;
   }
 `;
+
+const ResetIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+    <path d="M3 3v5h5" />
+  </svg>
+);
 
 export default function FlipDrop() {
   const [spin, setSpin] = useState(false);
   const [result, setResult] = useState(null);
   const [show, setShow] = useState(false);
-  const [end, setEnd] = useState("0deg");
   const [counts, setCounts] = useState({ heads: 0, tails: 0 });
+  const [resting, setResting] = useState(0);
+  const [endAngle, setEndAngle] = useState(0);
 
   const toss = () => {
     if (spin) return;
     setShow(false);
     setResult(null);
     const isHeads = Math.random() < 0.5;
-    const extra = (Math.floor(Math.random() * 3) + 6) * 360;
-    setEnd((isHeads ? extra : extra + 180) + "deg");
+    const extraFullSpins = (Math.floor(Math.random() * 3) + 6) * 360;
+    const normResting = resting % 360;
+    const targetFace = isHeads ? 0 : 180;
+    const diff = ((targetFace - normResting) + 360) % 360;
+    const newEnd = resting + extraFullSpins + diff;
+    setEndAngle(newEnd);
     setSpin(true);
     setTimeout(() => {
       setSpin(false);
+      setResting(newEnd);
       const r = isHeads ? "heads" : "tails";
       setResult(r);
       setCounts(c => ({ ...c, [r]: c[r] + 1 }));
@@ -200,7 +254,17 @@ export default function FlipDrop() {
     }, 1500);
   };
 
+  const reset = () => {
+    if (spin) return;
+    setCounts({ heads: 0, tails: 0 });
+    setResult(null);
+    setShow(false);
+  };
+
   const total = counts.heads + counts.tails;
+  const wrapStyle = spin
+    ? { "--s": resting + "deg", "--e": endAngle + "deg" }
+    : { transform: `rotateY(${resting}deg)` };
 
   return (
     <>
@@ -212,10 +276,7 @@ export default function FlipDrop() {
         </div>
 
         <div className="coin-stage">
-          <div
-            className={"coin-wrap" + (spin ? " spinning" : "")}
-            style={{ "--end": end }}
-          >
+          <div className={"coin-wrap" + (spin ? " spinning" : "")} style={wrapStyle}>
             <div className="face heads"><img src={HEADS} alt="Heads" /></div>
             <div className="face tails"><img src={TAILS} alt="Tails" /></div>
           </div>
@@ -230,28 +291,30 @@ export default function FlipDrop() {
           </div>
         </div>
 
-        <button className="btn" onClick={toss} disabled={spin}>
+        <button className="flip-btn" onClick={toss} disabled={spin}>
           {spin ? "Flipping" : "Flip"}
         </button>
 
-        {total > 0 && (
-          <div className="tally">
-            <div className="t-item">
-              <div className="t-num">{counts.heads}</div>
-              <div className="t-lbl">Heads</div>
-            </div>
-            <div className="t-sep" />
-            <div className="t-item">
-              <div className="t-num">{total}</div>
-              <div className="t-lbl">Total</div>
-            </div>
-            <div className="t-sep" />
-            <div className="t-item">
-              <div className="t-num">{counts.tails}</div>
-              <div className="t-lbl">Tails</div>
-            </div>
+        <div className="tally-card">
+          <div className="t-col">
+            <div className="t-num">{counts.heads}</div>
+            <div className="t-lbl">Heads</div>
           </div>
-        )}
+          <div className="t-divider" />
+          <div className="t-col">
+            <div className="t-num total">{total}</div>
+            <div className="t-lbl">Total</div>
+          </div>
+          <div className="t-divider" />
+          <div className="t-col">
+            <div className="t-num">{counts.tails}</div>
+            <div className="t-lbl">Tails</div>
+          </div>
+        </div>
+
+        <button className="reset-btn" onClick={reset} title="Reset">
+          <ResetIcon />
+        </button>
       </div>
     </>
   );
