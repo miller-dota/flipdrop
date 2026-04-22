@@ -14,9 +14,11 @@ Built with pure CSS 3D transforms — no animation libraries, no bloat. One file
 
 ---
 
+<p align="center">
+ <img src="flipdrop motion.gif" width="400" />
+</p>
 
 
-<img src="flipdrop motion.gif" width="400" />
 
 ## Features
 
