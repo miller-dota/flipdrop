@@ -18,7 +18,7 @@ Built with pure CSS 3D transforms — no animation libraries, no bloat. One file
   <img src="flipdrop demo.png" alt="isolated" width="600"/>
 </div>
 
-<img src="./assets/coin-flip.gif" width="400" />
+<img src="flipdrop motion.gif" width="400" />
 
 ## Features
 
